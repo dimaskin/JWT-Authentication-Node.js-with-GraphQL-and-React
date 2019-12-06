@@ -1,17 +1,32 @@
-import "reflect-metadata";
-//import {createConnection} from "typeorm";
-import express from 'express';
-//import {User} from "./entity/User";
-
+import "reflect-metadata"
+//import {createConnection} from "typeorm"
+import express from 'express'
+//import {User} from "./entity/User"
+import {ApolloServer} from 'apollo-server-express'
 
 
 (async () => {
-  const app = express();
-  app.get("/", (_req, res)=> res.send("hello"));
+  const app = express()
+  app.get("/", (_req, res)=> res.send("hello"))
+
+  const apolloServer = new ApolloServer({
+    typeDefs: `
+    type Query {
+      hello: String!
+    }
+    `,
+    resolvers: {
+      Query: {
+        hello: () => "hello world!"
+      }
+    }
+  })
+  apolloServer.applyMiddleware({app})
+
   app.listen(4000, () => {
     console.log("express server started!")
-  });
-})();
+  })
+})()
 
 // createConnection().then(async connection => {
 
