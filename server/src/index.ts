@@ -1,5 +1,5 @@
 import "reflect-metadata"
-//import {createConnection} from "typeorm"
+import "dotenv/config"
 import express from 'express'
 //import {User} from "./entity/User"
 import {ApolloServer} from 'apollo-server-express'
@@ -17,7 +17,8 @@ import { createConnection } from "typeorm";
   const apolloServer = new ApolloServer({
     schema: await buildSchema({
       resolvers: [UserResolver]
-    })
+    }),
+    context: ( { req, res } ) => ( { req, res } )
   })
   apolloServer.applyMiddleware({app})
 
